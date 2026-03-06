@@ -11,9 +11,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from PIL import Image
 import io
 
-# -----------------------------------------
-# 1️⃣ FASTAPI APP
-# -----------------------------------------
+
 app = FastAPI(title="Crop Disease Prediction API")
 
 app.add_middleware(
@@ -27,9 +25,6 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# -----------------------------------------
-# 2️⃣ CNN MODEL
-# -----------------------------------------
 class CropDiseaseCNN(nn.Module):
     def __init__(self, num_classes):
         super().__init__()
@@ -50,9 +45,6 @@ class CropDiseaseCNN(nn.Module):
         x = self.dropout(x)
         return self.fc2(x)
 
-# -----------------------------------------
-# 3️⃣ CLASS NAMES
-# -----------------------------------------
 class_names = [
     "Pepper__bell___Bacterial_spot",
     "Pepper__bell___healthy",
@@ -71,9 +63,6 @@ class_names = [
     "Tomato_healthy",
 ]
 
-# -----------------------------------------
-# 4️⃣ DISEASE KNOWLEDGE BASE (ALL CLASSES)
-# -----------------------------------------
 default_info = {
     "causes": ["No known causes available"],
     "prevention": ["No prevention data available"],
@@ -158,16 +147,10 @@ disease_data = {
     },
 }
 
-# -----------------------------------------
-# 5️⃣ LOAD MODEL
-# -----------------------------------------
 model = CropDiseaseCNN(num_classes=len(class_names))
 model.load_state_dict(torch.load("crop_disease_model.pth", map_location="cpu"))
 model.eval()
 
-# -----------------------------------------
-# 6️⃣ IMAGE TRANSFORM
-# -----------------------------------------
 transform = transforms.Compose([
     transforms.Resize((224, 224)),
     transforms.ToTensor(),
@@ -177,9 +160,6 @@ transform = transforms.Compose([
     ),
 ])
 
-# -----------------------------------------
-# 7️⃣ ROUTES
-# -----------------------------------------
 @app.get("/")
 def home():
     return {"message": "Crop Disease Prediction API running 🚀"}
