@@ -53,17 +53,14 @@ export default function Activities() {
     "Other",
   ];
 
-  /* ================= i18n ================= */
   useEffect(() => {
     i18n.locale = language;
   }, [language]);
 
-  /* ================= HELPERS ================= */
   const handleInputChange = (field, value) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
   };
 
-  /* ================= FETCH ================= */
   const fetchActivities = async () => {
     try {
       setLoading(true);
@@ -82,7 +79,6 @@ export default function Activities() {
     fetchActivities();
   }, []);
 
-  /* ================= MODAL ================= */
   const openAddModal = () => {
     setEditingActivity(null);
     setFormData({ type: "", activityDate: "", description: "" });
@@ -99,7 +95,6 @@ export default function Activities() {
     setModalVisible(true);
   };
 
-  /* ================= SAVE ================= */
   const saveActivity = async () => {
     if (!formData.type || !formData.activityDate) {
       Alert.alert(i18n.t("Error"), "Please fill required fields");
@@ -126,7 +121,6 @@ export default function Activities() {
     }
   };
 
-  /* ================= DELETE ================= */
   const deleteActivity = (id) => {
     Alert.alert(i18n.t("Confirm"), "Delete this activity?", [
       { text: i18n.t("Cancel"), style: "cancel" },
@@ -149,7 +143,6 @@ export default function Activities() {
     ]);
   };
 
-  /* ================= DATE PICKER ================= */
   const handleDateChange = (_, selectedDate) => {
     setShowDatePicker(false);
     if (selectedDate) {
@@ -160,7 +153,6 @@ export default function Activities() {
     }
   };
 
-  /* ================= RENDER ================= */
   return (
     <View className={`flex-1 ${isDark ? "bg-gray-900" : "bg-green-600"}`}>
       {/* HEADER */}
