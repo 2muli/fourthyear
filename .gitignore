@@ -12,3 +12,8 @@ mobile/ios/
 
 # env
 .env
+
+# AI models
+*.pth
+*.pt
+*.pkl
